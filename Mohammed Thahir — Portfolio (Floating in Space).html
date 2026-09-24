@@ -233,7 +233,94 @@ section .sec-head{transform:translate3d(calc(var(--mx,0)*4px), calc(var(--my,0)*
   .photo-wrap,.pill{animation:none}
 }
 
+
+/* ===== HR-magnet polish ===== */
+/* availability badge */
+.avail-badge{
+  display:inline-flex;align-items:center;gap:9px;margin-top:16px;
+  font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--accent);
+  background:var(--accent-soft);border:1px solid rgba(47,214,154,.35);
+  padding:7px 16px;border-radius:999px;
+  opacity:0;animation:badgeIn .8s .9s cubic-bezier(.2,.7,.3,1) forwards;
+}
+@keyframes badgeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.pulse-dot{width:8px;height:8px;border-radius:50%;background:var(--accent);position:relative}
+.pulse-dot::after{
+  content:"";position:absolute;inset:-4px;border-radius:50%;
+  border:1.5px solid var(--accent);animation:dotPing 1.8s ease-out infinite;
+}
+@keyframes dotPing{from{transform:scale(.5);opacity:1}to{transform:scale(1.8);opacity:0}}
+
+/* staggered hero letters */
+.hero h1 .ch{display:inline-block;opacity:0;transform:translateY(.6em) rotate(4deg);filter:blur(4px);
+  animation:chIn .7s cubic-bezier(.2,.7,.3,1) forwards}
+@keyframes chIn{to{opacity:1;transform:none;filter:blur(0)}}
+.hero h1 .hl .ch{background:linear-gradient(100deg,var(--accent) 20%,var(--gold) 80%);
+  -webkit-background-clip:text;background-clip:text;color:transparent}
+
+/* typewriter */
+.typeline{color:var(--accent);font-size:14.5px;margin:0 0 18px;min-height:1.6em}
+.caret{display:inline-block;width:9px;height:1.1em;background:var(--accent);margin-left:3px;
+  vertical-align:text-bottom;animation:blink 1s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+
+/* cursor glow — flashlight in space */
+#cursorGlow{
+  position:fixed;width:520px;height:520px;border-radius:50%;pointer-events:none;z-index:0;
+  background:radial-gradient(circle, rgba(47,214,154,.075), rgba(88,60,180,.05) 40%, transparent 65%);
+  transform:translate(-50%,-50%);left:-999px;top:-999px;
+}
+
+/* scroll progress bar */
+#progress{position:fixed;top:0;left:0;height:2.5px;width:0;z-index:60;
+  background:linear-gradient(90deg,var(--accent),var(--gold));box-shadow:0 0 10px rgba(47,214,154,.6)}
+
+/* magnetic buttons + shine sweep */
+.btn{transition:transform .25s cubic-bezier(.2,.7,.3,1),box-shadow .25s,background .2s;position:relative;overflow:hidden}
+.btn::after{
+  content:"";position:absolute;top:0;left:-80%;width:50%;height:100%;
+  background:linear-gradient(105deg,transparent,rgba(255,255,255,.35),transparent);
+  transform:skewX(-20deg);transition:left .5s;
+}
+.btn:hover::after{left:130%}
+.btn.primary,.btn.ghost{
+  box-shadow:0 0 0 1px rgba(47,214,154,.35), 0 8px 26px rgba(47,214,154,.22), 0 0 22px rgba(47,214,154,.18);
+  animation:btnBreath 3s ease-in-out infinite;
+}
+.btn.ghost{border-color:rgba(47,214,154,.5)}
+@keyframes btnBreath{0%,100%{box-shadow:0 0 0 1px rgba(47,214,154,.35),0 8px 26px rgba(47,214,154,.22),0 0 22px rgba(47,214,154,.18)}50%{box-shadow:0 0 0 1px rgba(47,214,154,.55),0 8px 36px rgba(47,214,154,.4),0 0 38px rgba(232,180,90,.22)}}
+
+/* nav active link */
+.nav-links a.active{color:var(--accent)}
+.nav-links a.active::after{width:100%}
+
+/* skill chips pop */
+.chip{transition:transform .2s cubic-bezier(.34,1.56,.64,1),box-shadow .2s,background .2s}
+.chip:hover{transform:translateY(-3px) scale(1.08);box-shadow:0 6px 16px rgba(47,214,154,.3);background:rgba(47,214,154,.22)}
+
+/* project icon entrance + hover spin */
+.project-icon{transition:transform .35s cubic-bezier(.34,1.56,.64,1),background .2s}
+.project:hover .project-icon{transform:rotate(-8deg) scale(1.12);background:rgba(232,180,90,.15);color:var(--gold)}
+
+/* timeline draw-in */
+.t-item::after{content:"";position:absolute;left:-29px;top:24px;width:12px;height:0;
+  border-left:2px solid rgba(47,214,154,.0);transition:height .8s}
+.t-item.in::before{animation:nodePop .5s cubic-bezier(.34,1.56,.64,1)}
+@keyframes nodePop{from{transform:scale(0)}to{transform:scale(1)}}
+
+/* footer shimmer */
+footer .big{background:linear-gradient(100deg,var(--ink) 30%,var(--accent) 50%,var(--gold) 60%,var(--ink) 75%);
+  background-size:220% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;
+  animation:shimmer 5s linear infinite}
+@keyframes shimmer{to{background-position:-220% 0}}
+
+@media(prefers-reduced-motion:reduce){
+  .hero h1 .ch{opacity:1;transform:none;animation:none}
+  .caret,.pulse-dot::after,.btn.primary,footer .big{animation:none}
+}
+
 </style>
+<base target="_blank">
 </head>
 <body>
 <div class="stars-twinkle"></div>
@@ -249,7 +336,7 @@ section .sec-head{transform:translate3d(calc(var(--mx,0)*4px), calc(var(--my,0)*
       <a href="#achievements">Achievements</a>
       <a href="#contact">Contact</a>
     </div>
-    <a class="nav-cta" href="mailto:namohammedthahir@gmail.com">Hire me</a>
+    <a class="nav-cta" href="mailto:namohammedthahir@gmail.com?subject=Job%20Offer%20%E2%80%94%20Mohammed%20Thahir&body=Hi%20Thahir%2C%0A%0AWe%20came%20across%20your%20portfolio%20and%20would%20like%20to%20offer%20you%20a%20role%20at%20our%20company.%0A%0APosition%3A%20%0ACompany%3A%20%0ALocation%3A%20%0AJob%20type%3A%20(Internship%20%2F%20Full-time)%0A%0APlease%20let%20us%20know%20a%20good%20time%20to%20discuss.%0A%0ABest%20regards%2C">Hire me</a>
   </div>
 </nav>
 
@@ -258,11 +345,13 @@ section .sec-head{transform:translate3d(calc(var(--mx,0)*4px), calc(var(--my,0)*
     <div class="hero-grid">
       <div>
         <span class="kicker">Chennai, India · AI &amp; ML Engineer</span>
+        <div class="avail-badge"><span class="pulse-dot"></span>Open to internship opportunities — 2026</div>
         <h1>Mohammed Thahir <span class="hl">N.&nbsp;A.</span></h1>
+        <p class="typeline mono">&gt; <span id="roleText"></span><span class="caret"></span></p>
         <p class="tagline">AI &amp; ML undergraduate who turns ideas into working prototypes — from student-facing web apps to AI agents that write documents for you.</p>
         <div class="hero-cta">
           <a class="btn primary" href="#projects">View projects</a>
-          <a class="btn ghost" href="https://www.linkedin.com/in/mohammed-thahir?utm_source=share_via&utm_content=profile&utm_medium=member_android" target="_blank" rel="noopener">Get in touch</a>
+          <a class="btn ghost" href="mailto:namohammedthahir@gmail.com?subject=Let%27s%20connect%20%E2%80%94%20Mohammed%20Thahir%20Portfolio&body=Hi%20Thahir%2C%0A%0AI%20came%20across%20your%20portfolio%20and%20would%20love%20to%20connect.%0A%0ARegards%2C">Contact me</a>
         </div>
         <div class="contact">
           <a href="mailto:namohammedthahir@gmail.com">namohammedthahir@gmail.com</a>
@@ -531,6 +620,103 @@ section .sec-head{transform:translate3d(calc(var(--mx,0)*4px), calc(var(--my,0)*
   document.querySelectorAll('section, .project, .skill-card, .t-item, header.hero > .hero-grid > div, .photo-wrap').forEach(el => {
     el.classList.add('reveal'); io.observe(el);
   });
+})();
+</script>
+
+
+<script>
+(function(){
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* 1. Staggered hero name letters */
+  const h1 = document.querySelector('.hero h1');
+  let delay = .15;
+  function splitNode(node, hl){
+    [...node.childNodes].forEach(child => {
+      if(child.nodeType === 3){
+        const frag = document.createDocumentFragment();
+        for(const ch of child.textContent){
+          if(ch === ' '){ frag.appendChild(document.createTextNode(' ')); continue; }
+          const s = document.createElement('span');
+          s.className = 'ch' + (hl ? ' hl-ch' : '');
+          s.textContent = ch;
+          s.style.animationDelay = (delay += .035) + 's';
+          frag.appendChild(s);
+        }
+        node.replaceChild(frag, child);
+      } else if(child.nodeType === 1){
+        splitNode(child, hl || child.classList.contains('hl'));
+      }
+    });
+  }
+  if(!reduceMotion) splitNode(h1, false);
+
+  /* 2. Typewriter rotating roles */
+  const roles = ['AI / ML Engineer','Full-Stack Builder','Hackathon Presenter','Prompt Engineer','Problem Solver'];
+  const roleEl = document.getElementById('roleText');
+  let ri = 0, ci = 0, deleting = false;
+  function type(){
+    const word = roles[ri];
+    roleEl.textContent = word.slice(0, ci);
+    if(!deleting && ci < word.length){ ci++; setTimeout(type, 65); }
+    else if(!deleting){ deleting = true; setTimeout(type, 1800); }
+    else if(ci > 0){ ci--; setTimeout(type, 32); }
+    else { deleting = false; ri = (ri+1) % roles.length; setTimeout(type, 350); }
+  }
+  if(!reduceMotion) setTimeout(type, 1200); else roleEl.textContent = roles[0];
+
+  /* 3. Cursor glow follower */
+  const glow = document.createElement('div');
+  glow.id = 'cursorGlow';
+  document.body.appendChild(glow);
+  let gx = innerWidth/2, gy = innerHeight/2, tx = gx, ty = gy;
+  addEventListener('pointermove', e => { tx = e.clientX; ty = e.clientY; }, {passive:true});
+  (function follow(){
+    gx += (tx-gx)*.08; gy += (ty-gy)*.08;
+    glow.style.left = gx+'px'; glow.style.top = gy+'px';
+    requestAnimationFrame(follow);
+  })();
+
+  /* 4. Scroll progress bar */
+  const bar = document.createElement('div');
+  bar.id = 'progress';
+  document.body.appendChild(bar);
+  addEventListener('scroll', () => {
+    const h = document.documentElement;
+    bar.style.width = (h.scrollTop / (h.scrollHeight - h.clientHeight) * 100) + '%';
+  }, {passive:true});
+
+  /* 5. Magnetic buttons */
+  document.querySelectorAll('.btn, .nav-cta').forEach(btn => {
+    btn.addEventListener('pointermove', e => {
+      if(reduceMotion) return;
+      const b = btn.getBoundingClientRect();
+      const dx = e.clientX - (b.left + b.width/2);
+      const dy = e.clientY - (b.top + b.height/2);
+      btn.style.transform = 'translate(' + dx*.18 + 'px,' + dy*.22 + 'px)';
+    });
+    btn.addEventListener('pointerleave', () => { btn.style.transform = ''; });
+  });
+
+  /* 6. Active nav link highlighting */
+  const links = [...document.querySelectorAll('.nav-links a')];
+  const secObs = new IntersectionObserver(entries => {
+    entries.forEach(en => {
+      if(en.isIntersecting){
+        links.forEach(l => l.classList.toggle('active', l.getAttribute('href') === '#'+en.target.id));
+      }
+    });
+  }, {rootMargin:'-40% 0px -55% 0px'});
+  links.forEach(l => {
+    const sec = document.querySelector(l.getAttribute('href'));
+    if(sec) secObs.observe(sec);
+  });
+
+  /* 7. Timeline nodes pop when revealed */
+  const tObs = new IntersectionObserver(entries => {
+    entries.forEach(en => { if(en.isIntersecting){ en.target.classList.add('in'); tObs.unobserve(en.target); } });
+  }, {threshold:.4});
+  document.querySelectorAll('.t-item').forEach(el => tObs.observe(el));
 })();
 </script>
 
